@@ -268,7 +268,7 @@ public class TestPhonyList {
 
         actual.addAll(1, toInsert);
 
-        assertEquals((Integer)1, actual.get(1));
+        assertEquals((Integer) 1, actual.get(1));
     }
 
     @Test
@@ -284,7 +284,7 @@ public class TestPhonyList {
 
         actual.addAll(2, toInsert);
 
-        assertEquals((Integer)1, actual.get(2));
+        assertEquals((Integer) 1, actual.get(2));
     }
 
     @Test
@@ -315,5 +315,38 @@ public class TestPhonyList {
         boolean res = actual.addAll(1, toInsert);
 
         assertFalse(res);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void rangeCheck_Test()
+    {
+        PhonyList<Integer> actual = list();
+        actual.add(0);
+
+        Integer res = actual.get(2);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void rangeCheckForAdd_NegativeIndex()
+    {
+        PhonyList<Integer> actual = list();
+        actual.add(0);
+
+        Collection<Integer> toInsert = new ArrayList<Integer>();
+        toInsert.add((Integer)1);
+
+        actual.addAll(-1, toInsert);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void rangeCheckForAdd_OverSizeIndex()
+    {
+        PhonyList<Integer> actual = list();
+        actual.add(0);
+
+        Collection<Integer> toInsert = new ArrayList<Integer>();
+        toInsert.add((Integer)1);
+
+        actual.addAll(2, toInsert);
     }
 }
