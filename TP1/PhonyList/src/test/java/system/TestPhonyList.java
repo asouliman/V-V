@@ -246,4 +246,74 @@ public class TestPhonyList {
     }
 
 
+    /**
+     * Tests the addAll method of a list.
+     *
+     * @see PhonyList#addAll(int, Collection)
+     * @type Functional
+     * @input []
+     * @oracle The value returned with addAll
+     * @passed Yes
+     */
+    @Test
+    public void addAll_Test()
+    {
+        PhonyList<Integer> actual = list();
+        actual.add(0);
+        actual.add(3);
+
+        Collection<Integer> toInsert = new ArrayList<Integer>();
+        toInsert.add((Integer)1);
+        toInsert.add((Integer)2);
+
+        actual.addAll(1, toInsert);
+
+        assertEquals((Integer)1, actual.get(1));
+    }
+
+    @Test
+    public void addAll_ZeroMoved()
+    {
+        PhonyList<Integer> actual = list();
+        actual.add(0);
+        actual.add(3);
+
+        Collection<Integer> toInsert = new ArrayList<Integer>();
+        toInsert.add((Integer)1);
+        toInsert.add((Integer)2);
+
+        actual.addAll(2, toInsert);
+
+        assertEquals((Integer)1, actual.get(2));
+    }
+
+    @Test
+    public void addAll_ReturnTrue()
+    {
+        PhonyList<Integer> actual = list();
+        actual.add(0);
+        actual.add(3);
+
+        Collection<Integer> toInsert = new ArrayList<Integer>();
+        toInsert.add((Integer)1);
+        toInsert.add((Integer)2);
+
+        boolean res = actual.addAll(1, toInsert);
+
+        assertTrue(res);
+    }
+
+    @Test
+    public void addAll_ReturnFalse()
+    {
+        PhonyList<Integer> actual = list();
+        actual.add(0);
+        actual.add(3);
+
+        Collection<Integer> toInsert = new ArrayList<Integer>();
+
+        boolean res = actual.addAll(1, toInsert);
+
+        assertFalse(res);
+    }
 }
