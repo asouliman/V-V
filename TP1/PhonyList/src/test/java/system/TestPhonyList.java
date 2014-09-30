@@ -349,4 +349,18 @@ public class TestPhonyList {
 
         actual.addAll(2, toInsert);
     }
+
+    @Test
+    public void removeRange_Test()
+    {
+        PhonyList<Integer> actual = list();
+        actual.add(0);
+        actual.add(1);
+        actual.add(2);
+
+        actual.removeRange(0, 1);
+
+        assertEquals((Integer)1, actual.get(0));
+    }
+
 }
