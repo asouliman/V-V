@@ -4,8 +4,11 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.InputMismatchException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by thomas on 29/09/14.
@@ -175,4 +178,72 @@ public class TestPhonyList {
         // Oracle
         assertEquals(true, value);
     }
+
+    /**
+     * Tests the remove method of a list.
+     *
+     * @see PhonyList#remove(Object)
+     * @type Functional
+     * @input []
+     * @oracle The value returned with remove must correspond if the object was in the list or not.
+     * @passed Yes
+     */
+    @Test
+    public void remove_Test()
+    {
+        PhonyList<Integer> actual = list();
+        actual.add(1);
+        actual.add(2);
+        actual.add(3);
+
+        boolean res = actual.remove((Integer)3);
+
+        assertTrue(res);
+    }
+
+    /**
+     * Tests the remove method of a list.
+     *
+     * @see PhonyList#remove(Object)
+     * @type Functional
+     * @input []
+     * @oracle The value returned with remove must correspond if the object was in the list or not.
+     * @passed Yes
+     */
+    @Test
+    public void removeFalse_Test()
+    {
+        PhonyList<Integer> actual = list();
+        actual.add(1);
+        actual.add(2);
+        actual.add(3);
+
+        boolean res = actual.remove((Integer)4);
+
+        assertFalse(res);
+    }
+
+    /**
+     * Tests the remove method of a list.
+     *
+     * @see PhonyList#remove(Object)
+     * @type Functional
+     * @input []
+     * @oracle The value returned with remove must correspond if the object was in the list or not.
+     * @passed Yes
+     */
+    @Test
+    public void removeNull_Test()
+    {
+        PhonyList<Integer> actual = list();
+        actual.add(1);
+        actual.add(2);
+        actual.add(null);
+
+        boolean res = actual.remove(null);
+
+        assertTrue(res);
+    }
+
+
 }
