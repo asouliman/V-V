@@ -233,7 +233,7 @@ public class TestPhonyList {
      * @passed Yes
      */
     @Test
-    public void removeNull_Test()
+    public void remove_nullFound()
     {
         PhonyList<Integer> actual = list();
         actual.add(1);
@@ -245,6 +245,18 @@ public class TestPhonyList {
         assertTrue(res);
     }
 
+    @Test
+    public void remove_nullNotFound()
+    {
+        PhonyList<Integer> actual = list();
+        actual.add(1);
+        actual.add(2);
+        actual.add(3);
+
+        boolean res = actual.remove(null);
+
+        assertFalse(res);
+    }
 
     /**
      * Tests the addAll method of a list.
@@ -401,7 +413,7 @@ public class TestPhonyList {
     }
 
     @Test
-    public void indexOf_nullWrong()
+    public void indexOf_nullNotFound()
     {
         // Creating a call context
         PhonyList<Integer> actual = list(1,2);
