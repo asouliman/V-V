@@ -363,4 +363,19 @@ public class TestPhonyList {
         assertEquals((Integer)1, actual.get(0));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void removeAllNull_Test() {
+        // Creating a call context
+        PhonyList<Integer> actual = list();
+
+        boolean value;
+
+        actual.add(0);
+        actual.add(1);
+        actual.add(2);
+
+        // Calling the tested operation
+        value = actual.removeAll(null);
+    }
+
 }
