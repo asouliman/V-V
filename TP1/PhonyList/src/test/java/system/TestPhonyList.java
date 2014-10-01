@@ -176,7 +176,7 @@ public class TestPhonyList {
         value = actual.removeAll(collection);
 
         // Oracle
-        assertEquals(true, value);
+        assertTrue(value);
     }
 
     /**
@@ -376,6 +376,39 @@ public class TestPhonyList {
 
         // Calling the tested operation
         value = actual.removeAll(null);
+    }
+
+    @Test
+    public void removeAllNonExisting_Test() {
+        // Creating a call context
+        PhonyList<Integer> actual = list();
+
+        boolean value;
+
+        actual.add(0);
+        actual.add(1);
+        actual.add(2);
+
+        Collection<Integer> collection = new ArrayList<Integer>();
+        collection.add(3);
+        collection.add(4);
+        collection.add(5);
+
+        // Calling the tested operation
+        value = actual.removeAll(collection);
+
+        assertFalse(value);
+    }
+
+    @Test
+    public void indexOf_nullWrong()
+    {
+        // Creating a call context
+        PhonyList<Integer> actual = list(1,2);
+
+        int res = actual.indexOf(null);
+
+        assertEquals(-1, res);
     }
 
 }
