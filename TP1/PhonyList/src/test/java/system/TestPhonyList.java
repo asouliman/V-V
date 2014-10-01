@@ -11,7 +11,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by thomas on 29/09/14.
+ * Created by Thomas & Amona on 29/09/14.
  */
 public class TestPhonyList {
 
@@ -189,14 +189,14 @@ public class TestPhonyList {
      * @passed Yes
      */
     @Test
-    public void remove_Test()
+    public void remove_NotLastElement()
     {
         PhonyList<Integer> actual = list();
         actual.add(1);
         actual.add(2);
         actual.add(3);
 
-        boolean res = actual.remove((Integer)3);
+        boolean res = actual.remove((Integer)1);
 
         assertTrue(res);
     }
@@ -256,6 +256,16 @@ public class TestPhonyList {
         boolean res = actual.remove(null);
 
         assertFalse(res);
+    }
+
+    @Test
+    public void remove_LastElement()
+    {
+        PhonyList<Integer> actual = list(0,1,2);
+
+        boolean res = actual.remove((Integer)2);
+
+        assertTrue(res);
     }
 
     /**
