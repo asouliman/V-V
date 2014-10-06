@@ -50,10 +50,10 @@ public class TestExample {
 
     @Test
     public void testNumberOfPawns() {
-        Board b = create(2, 2, 2, 2, 2);
+        Board b = create(1, 2, 2, 2, 2);
 
         int numberOfPawns = b.numberOfPawns();
-        assertEquals(numberOfPawns, 2);
+        assertEquals(numberOfPawns, 1);
     }
 
     @Test
@@ -80,5 +80,13 @@ public class TestExample {
         Board b = create(2, 2, 2, 2, 2);
 
         assertEquals(b.maxGold(), 0);
+    }
+
+    @Test
+    public void testSquareContentSprite() {
+        Board b = create(1, 2, 2, 1, 1);
+
+        assertEquals(b.squareContentSprite(1, 1), '#');
+        assertEquals(b.squareContentSprite(2, 2), '.');
     }
 }
