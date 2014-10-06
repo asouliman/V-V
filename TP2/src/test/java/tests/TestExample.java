@@ -1,6 +1,8 @@
 package tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 import org.junit.Test;
@@ -64,7 +66,19 @@ public class TestExample {
     }
 
     @Test
-    public void testGetNextPawn() {
-        
+    public void testIsBonusSquare() {
+        Board b = create(2, 2, 2, 2, 2);
+
+        assertTrue(b.isBonusSquare(2, 2));
+        assertFalse(b.isBonusSquare(1, 1));
+        assertFalse(b.isBonusSquare(2, 1));
+        assertFalse(b.isBonusSquare(1, 2));
+    }
+
+    @Test
+    public void testMaxGold() {
+        Board b = create(2, 2, 2, 2, 2);
+
+        assertEquals(b.maxGold(), 0);
     }
 }
