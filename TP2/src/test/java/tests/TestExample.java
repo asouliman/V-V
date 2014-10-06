@@ -17,15 +17,54 @@ import java.util.ArrayList;
 @RunWith(MockitoJUnitRunner.class)
 public class TestExample {
 
-    @Test
-    public void test() {
-        //ArrayList<Pawn> pawns = mock(Pawn.class);
-
-        // Board(int numberOfPawns, int sizeX, int sizeY, int xBonus, int yBonus)
-        Board b = new Board(2, 5, 5, 2, 2);
-
-        int x = b.getXSize();
-        assertEquals(x, 5);
+    /**
+     * Helper class
+     * @param numberOfPawn
+     * @param sizeX
+     * @param sizeY
+     * @param xBonus
+     * @param yBonus
+     * @return Board
+     */
+    Board create(int numberOfPawn, int sizeX, int sizeY, int xBonus, int yBonus) {
+        return new Board(numberOfPawn, sizeX, sizeY, xBonus, yBonus);
     }
 
+    @Test
+    public void testXSize() {
+        Board b = create(2, 2, 2, 2, 2);
+
+        int x = b.getXSize();
+        assertEquals(x, 2);
+    }
+
+    @Test
+    public void testYSize() {
+        Board b = create(2, 2, 2, 2, 2);
+
+        int y = b.getYSize();
+        assertEquals(y, 2);
+    }
+
+    @Test
+    public void testNumberOfPawns() {
+        Board b = create(2, 2, 2, 2, 2);
+
+        int numberOfPawns = b.numberOfPawns();
+        assertEquals(numberOfPawns, 2);
+    }
+
+    @Test
+    public void testRemoveAllPawns() {
+        Board b = create(2, 2, 2, 2, 2);
+
+        b.removeAllPawns();
+        int numberOfPawns = b.numberOfPawns();
+        assertEquals(numberOfPawns, 0);
+    }
+
+    @Test
+    public void testGetNextPawn() {
+        
+    }
 }
