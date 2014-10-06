@@ -41,54 +41,64 @@ public class TestPhonyList {
      *
      * @see PhonyList#get(int)
      * @type Functional
-     * @input []
-     * @oracle The value returned with get must correspond to the value added.
+     * @input list=[0,1], o=1
+     * @oracle It must return 1.
      * @passed Yes
      */
     @Test
     public void get_Test() {
         // Creating a call context
-        PhonyList<Integer> actual = list();
+        PhonyList<Integer> list = list(0, 1);
 
         int value = 0;
 
-        actual.add(0);
-        actual.add(1);
-
         // Calling the tested operation
-        value = actual.get(1);
+        value = list.get(1);
 
         // Oracle
         assertEquals(value, 1);
     }
 
     /**
-     * Tests the isEmpty method of a list.
+     * Tests the isEmpty method on a non empty list.
      *
      * @see PhonyList#isEmpty
      * @type Functional
-     * @input []
-     * @oracle The value returned with get must correspond if the list is empty or not.
+     * @input list=[0]
+     * @oracle It must return False.
      * @passed Yes
      */
     @Test
-    public void isEmpty_Test() {
+    public void isEmpty_False() {
         // Creating a call context
-        PhonyList<Integer> actual = list();
-        boolean empty;
-
-        actual.add(0);
+        PhonyList<Integer> list = list(0);
 
         // Calling the tested operation
-        empty = actual.isEmpty();
+        boolean empty = list.isEmpty();
 
         // Oracle
-        assertEquals(empty, false);
+        assertFalse(empty);
+    }
 
-        actual.clear();
-        empty = actual.isEmpty();
+    /**
+     * Tests the isEmpty method on an empty list.
+     *
+     * @see PhonyList#isEmpty
+     * @type Functional
+     * @input list=[]
+     * @oracle It must return True.
+     * @passed Yes
+     */
+    @Test
+    public void isEmpty_True() {
+        // Creating a call context
+        PhonyList<Integer> list = list();
 
-        assertEquals(empty, true);
+        // Calling the tested operation
+        boolean empty = list.isEmpty();
+
+        // Oracle
+        assertTrue(empty);
     }
 
     /**
@@ -96,30 +106,20 @@ public class TestPhonyList {
      *
      * @see PhonyList#contains(Object)
      * @type Functional
-     * @input []
-     * @oracle The value returned with contains must correspond if the object is in the list or not.
+     * @input list=[0,1], o=1
+     * @oracle It must return True.
      * @passed Yes
      */
     @Test
-    public void contains_Test() {
+    public void contains_True() {
         // Creating a call context
-        PhonyList<Integer> actual = list();
-
-        boolean value;
-
-        actual.add(0);
-        actual.add(1);
+        PhonyList<Integer> list = list(0, 1);
 
         // Calling the tested operation
-        value = actual.contains(1);
+        boolean contains = list.contains(1);
 
         // Oracle
-        assertEquals(value, true);
-
-        actual.clear();
-        value = actual.contains(1);
-
-        assertEquals(value, false);
+        assertTrue(contains);
     }
 
     /**
@@ -127,25 +127,70 @@ public class TestPhonyList {
      *
      * @see PhonyList#contains(Object)
      * @type Functional
-     * @input []
-     * @oracle The value returned with contains must correspond if the object is in the list or not.
+     * @input list=[0,1], o=2
+     * @oracle It must return False.
      * @passed Yes
      */
     @Test
-    public void set_Test() {
+    public void contains_False() {
         // Creating a call context
-        PhonyList<Integer> actual = list();
-
-        int oldValue = 0;
-
-        actual.add(0);
-        actual.add(1);
+        PhonyList<Integer> list = list(0, 1);
 
         // Calling the tested operation
-        oldValue = actual.set(1, 2);
+        boolean contains = list.contains(2);
+
+        // Oracle
+        assertFalse(contains);
+    }
+
+    /**
+     * Tests the set method of a list.
+     *
+     * @see PhonyList#set(int, Object)
+     * @type Functional
+     * @input list=[0,1], o=2
+     * @oracle It must return 1.
+     * @passed Yes
+     */
+    @Test
+    public void set_TestOldValue() {
+        // Creating a call context
+        PhonyList<Integer> list = list(0, 1);
+
+        // Calling the tested operation
+        int oldValue = list.set(1, 2);
 
         // Oracle
         assertEquals(1, oldValue);
+        // assertEquals(2, (int)list.get(1));
+    }
+
+    /**
+     * Tests the set method of a list.
+     *
+     * @see PhonyList#set(int, Object)
+     * @type Functional
+     * @input list=[0,1], o=2
+     * @oracle It must return 2.
+     * @passed No
+     * @correction
+     * <pre>
+     *     l.245
+     *     - elementData[++index] = element;
+     *     + elementData[index] = element;
+     * </pre>
+     */
+    @Test
+    public void set_TestNewValue() {
+        // Creating a call context
+        PhonyList<Integer> list = list(0, 1);
+        int index = 1;
+
+        // Calling the tested operation
+        int oldValue = list.set(index, 2);
+
+        // Oracle
+        assertEquals(2, (int)list.get(index));
     }
 
     /**
