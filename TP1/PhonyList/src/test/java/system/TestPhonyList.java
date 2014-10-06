@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.InputMismatchException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -50,10 +49,8 @@ public class TestPhonyList {
         // Creating a call context
         PhonyList<Integer> list = list(0, 1);
 
-        int value = 0;
-
         // Calling the tested operation
-        value = list.get(1);
+        int value = list.get(1);
 
         // Oracle
         assertEquals(value, 1);
@@ -162,7 +159,6 @@ public class TestPhonyList {
 
         // Oracle
         assertEquals(1, oldValue);
-        // assertEquals(2, (int)list.get(1));
     }
 
     /**
@@ -198,118 +194,172 @@ public class TestPhonyList {
      *
      * @see PhonyList#removeAll(Collection)
      * @type Functional
-     * @input []
-     * @oracle The value returned with contains must correspond if the object is in the list or not.
+     * @input list=[0,1,2], collection=[1,2]
+     * @oracle It must return True.
      * @passed Yes
      */
     @Test
-    public void removeAll_Test() {
+    public void removeAll_Good() {
         // Creating a call context
-        PhonyList<Integer> actual = list();
-
-        boolean value;
-
-        actual.add(0);
-        actual.add(1);
-        actual.add(2);
+        PhonyList<Integer> list = list(0, 1, 2);
 
         Collection<Integer> collection = new ArrayList<Integer>();
         collection.add(1);
         collection.add(2);
 
         // Calling the tested operation
-        value = actual.removeAll(collection);
+        boolean value = list.removeAll(collection);
 
         // Oracle
         assertTrue(value);
     }
 
     /**
-     * Tests the remove method of a list.
+     * Tests the removeAll method of a list.
      *
-     * @see PhonyList#remove(Object)
+     * @see PhonyList#removeAll(Collection)
      * @type Functional
-     * @input []
-     * @oracle The value returned with remove must correspond if the object was in the list or not.
+     * @input list=[0,1,2], collection=null
+     * @oracle It must throw a NullPointerException.
+     * @passed Yes
+     */
+    @Test(expected = NullPointerException.class)
+    public void removeAll_Null() {
+        // Creating a call context
+        PhonyList<Integer> list = list(0, 1, 2);
+
+        // Calling the tested operation
+        boolean value = list.removeAll(null);
+    }
+
+    /**
+     * Tests the removeAll method on an empty list.
+     *
+     * @see PhonyList#removeAll(Collection)
+     * @type Functional
+     * @input list=[0,1,2], collection=[3,4,5]
+     * @oracle It must return False.
      * @passed Yes
      */
     @Test
-    public void remove_NotLastElement()
-    {
-        PhonyList<Integer> actual = list();
-        actual.add(1);
-        actual.add(2);
-        actual.add(3);
+    public void removeAll_NotPresentInList() {
+        // Creating a call context
+        PhonyList<Integer> list = list(0, 1 ,2);
 
-        boolean res = actual.remove((Integer)1);
+        Collection<Integer> collection = new ArrayList<Integer>();
+        collection.add(3);
+        collection.add(4);
+        collection.add(5);
 
+        // Calling the tested operation
+        boolean value = list.removeAll(collection);
+
+        // Oracle
+        assertFalse(value);
+    }
+
+    /**
+     * Test removing an element of a list other than the last one.
+     *
+     * @see PhonyList#remove(Object)
+     * @type Functional
+     * @input list=[1,2,3], o=1
+     * @oracle It must return True.
+     * @passed Yes
+     */
+    @Test
+    public void remove_NotLastElement() {
+        // Creating a call context
+        PhonyList<Integer> list = list(1, 2, 3);
+
+        // Calling the tested operation
+        boolean res = list.remove((Integer)1);
+
+        // Oracle
         assertTrue(res);
     }
 
     /**
-     * Tests the remove method of a list.
+     * Test trying to remove an element not present in the list.
      *
      * @see PhonyList#remove(Object)
      * @type Functional
-     * @input []
-     * @oracle The value returned with remove must correspond if the object was in the list or not.
+     * @input list=[1,2,3], o=4
+     * @oracle It must return False.
      * @passed Yes
      */
     @Test
-    public void removeFalse_Test()
-    {
-        PhonyList<Integer> actual = list();
-        actual.add(1);
-        actual.add(2);
-        actual.add(3);
+    public void remove_NotPresentInList() {
+        // Creating a call context
+        PhonyList<Integer> list = list(1, 2, 3);
 
-        boolean res = actual.remove((Integer)4);
+        // Calling the tested operation
+        boolean res = list.remove((Integer)4);
 
+        // Oracle
         assertFalse(res);
     }
 
     /**
-     * Tests the remove method of a list.
+     * Test removing a null element from a list.
      *
      * @see PhonyList#remove(Object)
      * @type Functional
-     * @input []
-     * @oracle The value returned with remove must correspond if the object was in the list or not.
+     * @input list=[1,2,null], o=null
+     * @oracle It must return True.
      * @passed Yes
      */
     @Test
-    public void remove_nullFound()
-    {
-        PhonyList<Integer> actual = list();
-        actual.add(1);
-        actual.add(2);
-        actual.add(null);
+    public void remove_NullFound() {
+        // Creating a call context
+        PhonyList<Integer> list = list(1, 2, null);
 
-        boolean res = actual.remove(null);
+        // Calling the tested operation
+        boolean res = list.remove(null);
 
+        // Oracle
         assertTrue(res);
     }
 
+    /**
+     * Test trying to remove a null element from a list.
+     *
+     * @see PhonyList#remove(Object)
+     * @type Functional
+     * @input list=[1,2,3], o=null
+     * @oracle It must return False.
+     * @passed Yes
+     */
     @Test
-    public void remove_nullNotFound()
-    {
-        PhonyList<Integer> actual = list();
-        actual.add(1);
-        actual.add(2);
-        actual.add(3);
+    public void remove_NullNotFound() {
+        // Creating a call context
+        PhonyList<Integer> list = list(1, 2, 3);
 
-        boolean res = actual.remove(null);
+        // Calling the tested operation
+        boolean res = list.remove(null);
 
+        // Oracle
         assertFalse(res);
     }
 
+    /**
+     * Test removing the last element of a list.
+     *
+     * @see PhonyList#remove(Object)
+     * @type Functional
+     * @input list=[0,1,2], o=2
+     * @oracle It must return True.
+     * @passed Yes
+     */
     @Test
-    public void remove_LastElement()
-    {
-        PhonyList<Integer> actual = list(0,1,2);
+    public void remove_LastElement() {
+        // Creating a call context
+        PhonyList<Integer> list = list(0,1,2);
 
-        boolean res = actual.remove((Integer)2);
+        // Calling the tested operation
+        boolean res = list.remove((Integer)2);
 
+        // Oracle
         assertTrue(res);
     }
 
@@ -318,163 +368,198 @@ public class TestPhonyList {
      *
      * @see PhonyList#addAll(int, Collection)
      * @type Functional
-     * @input []
-     * @oracle The value returned with addAll
+     * @input list=[0,3], toInsert=[1,2]
+     * @oracle It must return 1.
      * @passed Yes
      */
     @Test
-    public void addAll_Test()
-    {
-        PhonyList<Integer> actual = list();
-        actual.add(0);
-        actual.add(3);
+    public void addAll_ElementMoved() {
+        // Creating a call context
+        PhonyList<Integer> list = list(0, 3);
 
         Collection<Integer> toInsert = new ArrayList<Integer>();
         toInsert.add((Integer)1);
         toInsert.add((Integer)2);
 
-        actual.addAll(1, toInsert);
+        // Calling the tested operation
+        list.addAll(1, toInsert);
 
-        assertEquals((Integer) 1, actual.get(1));
+        // Oracle
+        assertEquals((Integer) 1, list.get(1));
     }
 
+    /**
+     * Tests the addAll method of a list.
+     *
+     * @see PhonyList#addAll(int, Collection)
+     * @type Functional
+     * @input list=[0,3], toInsert=[1,2]
+     * @oracle It must return 1.
+     * @passed Yes
+     */
     @Test
-    public void addAll_ZeroMoved()
-    {
-        PhonyList<Integer> actual = list();
-        actual.add(0);
-        actual.add(3);
+    public void addAll_ZeroMoved() {
+        // Creating a call context
+        PhonyList<Integer> list = list(0, 3);
 
         Collection<Integer> toInsert = new ArrayList<Integer>();
         toInsert.add((Integer)1);
         toInsert.add((Integer)2);
 
-        actual.addAll(2, toInsert);
+        // Calling the tested operation
+        list.addAll(2, toInsert);
 
-        assertEquals((Integer) 1, actual.get(2));
+        // Oracle
+        assertEquals((Integer) 1, list.get(2));
     }
 
+    /**
+     * Tests the addAll method of a list.
+     *
+     * @see PhonyList#addAll(int, Collection)
+     * @type Functional
+     * @input list=[0,3], toInsert=[1,2]
+     * @oracle It must return True.
+     * @passed Yes
+     */
     @Test
-    public void addAll_ReturnTrue()
-    {
-        PhonyList<Integer> actual = list();
-        actual.add(0);
-        actual.add(3);
+    public void addAll_ReturnTrue() {
+        // Creating a call context
+        PhonyList<Integer> list = list(0, 3);
 
         Collection<Integer> toInsert = new ArrayList<Integer>();
         toInsert.add((Integer)1);
         toInsert.add((Integer)2);
 
-        boolean res = actual.addAll(1, toInsert);
+        // Calling the tested operation
+        boolean res = list.addAll(1, toInsert);
 
+        // Oracle
         assertTrue(res);
     }
 
+    /**
+     * Tests the addAll method of a list.
+     *
+     * @see PhonyList#addAll(int, Collection)
+     * @type Functional
+     * @input list=[0,3], toInsert=[]
+     * @oracle It must return False.
+     * @passed Yes
+     */
     @Test
-    public void addAll_ReturnFalse()
-    {
-        PhonyList<Integer> actual = list();
-        actual.add(0);
-        actual.add(3);
+    public void addAll_ReturnFalse() {
+        // Creating a call context
+        PhonyList<Integer> list = list(0, 3);
 
         Collection<Integer> toInsert = new ArrayList<Integer>();
 
-        boolean res = actual.addAll(1, toInsert);
+        // Calling the tested operation
+        boolean res = list.addAll(1, toInsert);
 
+        // Oracle
         assertFalse(res);
     }
 
+    /**
+     * Tests the rangeCheck method by calling the get method.
+     *
+     * @see PhonyList#rangeCheck(int)
+     * @type Functional
+     * @input list=[0], o=2
+     * @oracle It must throw an IndexOutOfBoundsException.
+     * @passed Yes
+     */
     @Test(expected = IndexOutOfBoundsException.class)
-    public void rangeCheck_Test()
-    {
-        PhonyList<Integer> actual = list();
-        actual.add(0);
+    public void rangeCheck_IndexOutOfBounds() {
+        // Creating a call context
+        PhonyList<Integer> list = list(0);
 
-        Integer res = actual.get(2);
+        // Calling the tested operation
+        Integer res = list.get(2);
     }
 
+    /**
+     * Tests the rangeCheckForAdd method by calling the addAll method.
+     *
+     * @see PhonyList#rangeCheckForAdd(int)
+     * @type Functional
+     * @input list=[0], toInsert=[1], index=-1
+     * @oracle It must throw an IndexOutOfBoundsException.
+     * @passed Yes
+     */
     @Test(expected = IndexOutOfBoundsException.class)
-    public void rangeCheckForAdd_NegativeIndex()
-    {
-        PhonyList<Integer> actual = list();
-        actual.add(0);
+    public void rangeCheckForAdd_NegativeIndex() {
+        // Creating a call context
+        PhonyList<Integer> list = list(0);
 
         Collection<Integer> toInsert = new ArrayList<Integer>();
         toInsert.add((Integer)1);
 
-        actual.addAll(-1, toInsert);
+        // Calling the tested operation
+        list.addAll(-1, toInsert);
     }
 
+    /**
+     * Tests the rangeCheckForAdd method by calling the addAll method.
+     *
+     * @see PhonyList#rangeCheckForAdd(int)
+     * @type Functional
+     * @input list=[0], toInsert=[1], index=2
+     * @oracle It must throw an IndexOutOfBoundsException.
+     * @passed Yes
+     */
     @Test(expected = IndexOutOfBoundsException.class)
-    public void rangeCheckForAdd_OverSizeIndex()
-    {
-        PhonyList<Integer> actual = list();
-        actual.add(0);
+    public void rangeCheckForAdd_OverSizeIndex() {
+        // Creating a call context
+        PhonyList<Integer> list = list(0);
 
         Collection<Integer> toInsert = new ArrayList<Integer>();
         toInsert.add((Integer)1);
 
-        actual.addAll(2, toInsert);
+        // Calling the tested operation
+        list.addAll(2, toInsert);
     }
 
+    /**
+     * Tests the removeRange method.
+     *
+     * @see PhonyList#removeRange(int, int)
+     * @type Functional
+     * @input list=[0,1,2], i=0, j=1
+     * @oracle It must return 1.
+     * @passed Yes
+     */
     @Test
-    public void removeRange_Test()
-    {
-        PhonyList<Integer> actual = list();
-        actual.add(0);
-        actual.add(1);
-        actual.add(2);
-
-        actual.removeRange(0, 1);
-
-        assertEquals((Integer)1, actual.get(0));
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void removeAllNull_Test() {
+    public void removeRange_Test() {
         // Creating a call context
-        PhonyList<Integer> actual = list();
-
-        boolean value;
-
-        actual.add(0);
-        actual.add(1);
-        actual.add(2);
+        PhonyList<Integer> list = list(0, 1, 2);
 
         // Calling the tested operation
-        value = actual.removeAll(null);
+        list.removeRange(0, 1);
+
+        // Oracle
+        assertEquals((Integer)1, list.get(0));
     }
 
+    /**
+     * Tests the indexOf method.
+     *
+     * @see PhonyList#indexOf(Object)
+     * @type Functional
+     * @input list=[1,2], o=null
+     * @oracle It must return -1.
+     * @passed Yes
+     */
     @Test
-    public void removeAllNonExisting_Test() {
+    public void indexOf_NullNotFound() {
         // Creating a call context
-        PhonyList<Integer> actual = list();
-
-        boolean value;
-
-        actual.add(0);
-        actual.add(1);
-        actual.add(2);
-
-        Collection<Integer> collection = new ArrayList<Integer>();
-        collection.add(3);
-        collection.add(4);
-        collection.add(5);
+        PhonyList<Integer> list = list(1,2);
 
         // Calling the tested operation
-        value = actual.removeAll(collection);
+        int res = list.indexOf(null);
 
-        assertFalse(value);
-    }
-
-    @Test
-    public void indexOf_nullNotFound()
-    {
-        // Creating a call context
-        PhonyList<Integer> actual = list(1,2);
-
-        int res = actual.indexOf(null);
-
+        // Oracle
         assertEquals(-1, res);
     }
 
