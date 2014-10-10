@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * Created by Thomas & Amona on 06/10/14.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class TestExample {
+public class TestBoard {
 
     /**
      * Helper class
@@ -164,5 +164,45 @@ public class TestExample {
         assertEquals(b.squareContentSprite(1, 1), 'c');
         assertEquals(b.squareContentSprite(2, 2), '2');
         assertEquals(b.squareContentSprite(2, 1), '.');
+    }
+
+    /**
+     * Test the removePawn method
+     *
+     * @see Board#removePawn(Pawn)
+     * @type Functional
+     * @input Board(1 ,2 ,2, 2, 2)
+     * @oracle It must be 0
+     * @passed Yes
+     */
+    @Test
+    public void testRemovePawn() {
+        Board b = create(1, 2, 2, 2, 2);
+
+        b.removePawn(b.getNextPawn());
+
+        assertEquals(b.numberOfPawns(), 0);
+    }
+
+    /**
+     * Test the toString method
+     *
+     * @see Board#toString()
+     * @type Functional
+     * @input Board(1, 3, 1, 0, 0)
+     * @oracle It must be "#c.\n"
+     * @passed Yes
+     */
+    @Test
+    public void testToString() {
+        Board b = create(1, 3, 1, 0, 0);
+
+        b.removeAllPawns();
+
+        Pawn p = new Pawn('1', 1, 0, b);
+        b.addPawn(p);
+        b.getNextPawn();
+
+        assertEquals(b.toString(), "#c.\n");
     }
 }
