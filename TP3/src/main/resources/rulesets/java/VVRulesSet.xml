@@ -22,4 +22,27 @@
             ]]>
         </example>
     </rule>
+
+    <rule
+        name="ForLoopsMustNotBeNestedRule"
+        message="Avoid nested FOR statements"
+        language="java"
+        class="vv.tp3.ForLoopsMustNotBeNestedRule">
+        <description>
+            Avoid nested 'for' statements
+        </description>
+        <priority>3</priority>
+
+        <example>
+            <![CDATA[
+                public void noob() {
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 4; j++) {
+                            System.out.println("Noob");
+                        }
+                    }
+                }
+            ]]>
+        </example>
+    </rule>
 </ruleset>
