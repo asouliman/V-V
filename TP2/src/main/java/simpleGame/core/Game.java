@@ -22,6 +22,23 @@ public class Game {
         board = new Board(2,4,4, new Random().nextInt(4), new Random().nextInt(4));
     }
 
+
+    /**
+     * Gets the board of the game
+     * @return board
+     */
+    public Board getBoard() {
+        return board;
+    }
+
+    /**
+     * Sets the board of the game
+     * @param board
+     */
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
     /**
      * The game is over if there is only one pawn left or if
      * a pawn possesses 5 gold or more.

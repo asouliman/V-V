@@ -88,7 +88,7 @@ public class TestPawn {
      * @passed Yes
      */
     @Test
-    public void testMoveAttack() throws OutOfBoardException {
+    public void testMoveAttackKill() throws OutOfBoardException {
 
         Board mockBoard = mock(Board.class);
         when(mockBoard.getXSize()).thenReturn(3);
@@ -106,4 +106,31 @@ public class TestPawn {
         assertTrue(p2.isDead());
     }
 
+    /**
+     * Test the move, attack, suffer & isDead methods of the Pawn class.
+     *
+     * @see Pawn#move(Direction)
+     * @type Functional
+     * @input Pawn('A', 1, 1), Pawn('B', 2, 1)
+     * @oracle The pawn A must not kill the pawn B.
+     * @passed Yes
+     */
+    @Test
+    public void testMoveAttackLives() throws OutOfBoardException {
+
+        Board mockBoard = mock(Board.class);
+        when(mockBoard.getXSize()).thenReturn(3);
+        when(mockBoard.getYSize()).thenReturn(3);
+        when(mockBoard.isBonusSquare(2,2)).thenReturn(true);
+
+        Pawn p1 = new Pawn('A', 1, 1, mockBoard);
+        Pawn p2 = new Pawn('B', 2, 1, mockBoard);
+
+        when(mockBoard.getSquareContent(2,1)).thenReturn(p2);
+
+        String msg = p1.move(Direction.Right);
+
+        assertEquals(msg, "A attacks!\nB loses 1 hitpoints.");
+        assertFalse(p2.isDead());
+    }
 }
