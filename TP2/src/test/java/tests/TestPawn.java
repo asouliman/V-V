@@ -71,11 +71,60 @@ public class TestPawn {
      * @passed Yes
      */
     @Test(expected = OutOfBoardException.class)
-    public void testMoveException() throws OutOfBoardException {
+    public void testMove_newXUnderZero() throws OutOfBoardException {
         Pawn p = create('p', 1, 1);
 
         p.move(Direction.Left);
         p.move(Direction.Left);
+    }
+
+    /**
+     * Test the move method of the Pawn class.
+     *
+     * @see Pawn#move(Direction)
+     * @type Functional
+     * @input Pawn('p', 4, 4)
+     * @oracle It must throw an OutOfBoardException.
+     * @passed Yes
+     */
+    @Test(expected = OutOfBoardException.class)
+    public void testMove_newXOverSize() throws OutOfBoardException {
+        Pawn p = create('p', 4, 4);
+
+        p.move(Direction.Right);
+    }
+
+    /**
+     * Test the move method of the Pawn class.
+     *
+     * @see Pawn#move(Direction)
+     * @type Functional
+     * @input Pawn('p', 4, 4)
+     * @oracle It must throw an OutOfBoardException.
+     * @passed Yes
+     */
+    @Test(expected = OutOfBoardException.class)
+    public void testMove_newYOverSize() throws OutOfBoardException {
+        Pawn p = create('p', 4, 4);
+
+        p.move(Direction.Up);
+    }
+
+    /**
+     * Test the move method of the Pawn class.
+     *
+     * @see Pawn#move(Direction)
+     * @type Functional
+     * @input Pawn('p', 1, 1)
+     * @oracle It must throw an OutOfBoardException.
+     * @passed Yes
+     */
+    @Test(expected = OutOfBoardException.class)
+    public void testMove_newYUnderZero() throws OutOfBoardException {
+        Pawn p = create('p', 1, 1);
+
+        p.move(Direction.Down);
+        p.move(Direction.Down);
     }
 
     /**
@@ -121,7 +170,7 @@ public class TestPawn {
         Board mockBoard = mock(Board.class);
         when(mockBoard.getXSize()).thenReturn(3);
         when(mockBoard.getYSize()).thenReturn(3);
-        when(mockBoard.isBonusSquare(2,2)).thenReturn(true);
+        when(mockBoard.isBonusSquare(2, 2)).thenReturn(true);
 
         Pawn p1 = new Pawn('A', 1, 1, mockBoard);
         Pawn p2 = new Pawn('B', 2, 1, mockBoard);
