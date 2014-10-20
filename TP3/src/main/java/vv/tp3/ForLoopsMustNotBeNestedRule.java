@@ -5,7 +5,7 @@ import net.sourceforge.pmd.lang.java.ast.ASTForStatement;
 import net.sourceforge.pmd.lang.java.rule.AbstractJavaRule;
 
 /**
- * Created by amona on 08/10/14.
+ * Created by Thomas & Amona on 08/10/14.
  */
 public class ForLoopsMustNotBeNestedRule extends AbstractJavaRule {
 

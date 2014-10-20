@@ -4,6 +4,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
 
+    <description>Ruleset for VV TP</description>
+
     <rule name="WhileLoopsMustUseBracesRule"
         message="Avoid using 'while' statements without curly braces"
          language="java"
@@ -24,25 +26,47 @@
     </rule>
 
     <rule
-        name="ForLoopsMustNotBeNestedRule"
-        message="Avoid nested FOR statements"
-        language="java"
-        class="vv.tp3.ForLoopsMustNotBeNestedRule">
+            name="ForLoopsMustNotBeNestedRule"
+            message="Avoid nested FOR statements"
+            language="java"
+            class="vv.tp3.ForLoopsMustNotBeNestedRule">
         <description>
-            Avoid nested 'for' statements
+            Avoid nested FOR statements
         </description>
         <priority>3</priority>
 
         <example>
             <![CDATA[
-                public void noob() {
+                public void foo() {
                     for (int i = 0; i < 3; i++) {
                         for (int j = 0; j < 4; j++) {
-                            System.out.println("Noob");
+                            System.out.println("foo");
                         }
                     }
                 }
             ]]>
         </example>
     </rule>
+
+    <rule
+            name="WhileTrueOrFalseRule"
+            message="Avoid true or false condition in WHILE statements without a return or a break statement"
+            language="java"
+            class="vv.tp3.WhileTrueOrFalseRule">
+        <description>
+            Avoid true or false condition in WHILE statements
+        </description>
+        <priority>3</priority>
+
+        <example>
+            <![CDATA[
+                public void foo() {
+                    while(true) {
+                        System.out.println("foo");
+                    }
+                }
+            ]]>
+        </example>
+    </rule>
+
 </ruleset>
