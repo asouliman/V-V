@@ -20,7 +20,7 @@ public class TestMap<K, V> {
 
     @Before
     public void setUp() {
-        map =  getNewMap();
+        map = getNewMap();
     }
 
     @After
